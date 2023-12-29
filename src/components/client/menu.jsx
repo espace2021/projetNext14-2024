@@ -30,7 +30,7 @@ function Menu({children }) {
             
             <Nav.Link as={Link} href="/"><HomeIcon/>Home</Nav.Link>
             <Nav.Link as={Link} href="/"><AccountCircleIcon/>Se connecter</Nav.Link>
-            <Nav.Link as={Link} href="/"><HelpIcon />Aide</Nav.Link>
+            <Nav.Link as={Link} href="/client/pageAide"><HelpIcon />Aide</Nav.Link>
           </Nav>
         </Container>
       </Navbar>

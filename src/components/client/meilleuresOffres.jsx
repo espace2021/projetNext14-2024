@@ -13,8 +13,8 @@ const MeilleuresOffres = () => {
        <h2>Les meilleures offres du moment</h2> 
     <div className="row gy-5">
       
-        {tabOffres.map((tab, i) =>  <div className="col-3"> <div className="p-3 border bg-light" key={i}>
-        <div className="card" key={i}>
+        {tabOffres.map((tab, i) =>  <div className="col-3" key={i}> <div className="p-3 border bg-light" >
+        <div className="card">
              <Image 
                 src={tab.src}  
                 height={200}

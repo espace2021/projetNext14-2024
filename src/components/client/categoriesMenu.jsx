@@ -12,11 +12,9 @@ async function getData() {
   }
    
 
-
 const CategoriesMenu = async() => {
     const data = await getData()
-    console.log(data)
-   
+    
   return (
     
     <>
