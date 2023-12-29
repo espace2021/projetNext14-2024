@@ -15,7 +15,12 @@ const MeilleuresOffres = () => {
       
         {tabOffres.map((tab, i) =>  <div className="col-3"> <div className="p-3 border bg-light" key={i}>
         <div className="card" key={i}>
-             <Image src={tab.src} width={200} height={200} alt="offres"/>
+             <Image 
+                src={tab.src}  
+                height={200}
+                width={200}
+                style={{maxWidth:'200px', maxHeight: "200px" }}
+                alt="offres"/>
         </div>
         </div>
         </div>

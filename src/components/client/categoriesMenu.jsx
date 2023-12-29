@@ -1,8 +1,5 @@
-'use server'
 import React from 'react'
-import NavDropdown from 'react-bootstrap/NavDropdown';
-
-import DynamicFeedIcon from '@mui/icons-material/DynamicFeed';
+import Link from 'next/link'
 
 async function getData() {
     const res = await fetch('http://localhost:3001/api/categories')
@@ -19,14 +16,13 @@ async function getData() {
 const CategoriesMenu = async() => {
     const data = await getData()
     console.log(data)
-
-    const title= <DynamicFeedIcon />
-
+   
   return (
-    <NavDropdown title={title} >
-    {data && data.length > 0 && data.map((category) =><NavDropdown.Item key={category._id}> {category.nomcategorie} </NavDropdown.Item>)}
     
-    </NavDropdown>
+    <>
+    {data && data.length>0 && data.map((category)=><div  key={category._id}> <Link href="/">{category.nomcategorie}</Link></div> )}
+    </>
+  
   )
 }
 
