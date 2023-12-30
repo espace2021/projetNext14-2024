@@ -1,20 +1,20 @@
 import React from 'react'
-import DetailCateg from '@/components/homePages/DetailCateg';
+import DetailCateg from '@/components/client/categoriesProducts/detailCateg';
 
-async function getScategories(categorieID){
+async function getProducts(categorieID){
 
-    const res= await fetch(`http://localhost:3001/api/scategories/cat/${categorieID}`, { cache: 'no-store' })
+    const res= await fetch(`http://localhost:3001/api/articles/cat/${categorieID}`, { cache: 'no-store' })
     const scategories = await res.json();
     return scategories;
   }
 
 const DetailCategPage = async({params}) => {
-    const scategories = await getScategories(params.slug[0])
+    const data = await getProducts(params.slug[0])
    
   return (
     <div>
       <h2>{decodeURI(params.slug[1])}</h2>
-      <DetailCateg scategories={scategories} />
+      <DetailCateg articles={data} />
     </div>
   )
 }

@@ -18,7 +18,10 @@ const CategoriesMenu = async() => {
   return (
     
     <>
-    {data && data.length>0 && data.map((category)=><div  key={category._id}> <Link href="/">{category.nomcategorie}</Link></div> )}
+    {data && data.length>0 && data.map((category)=><div  key={category._id}>
+       
+       <Link href={`/client/categoriesChoix/${category._id}/${category.nomcategorie}`}>
+        {category.nomcategorie}</Link></div> )}
     </>
   
   )

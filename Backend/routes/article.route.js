@@ -2,6 +2,30 @@ const express = require('express');
 const router = express.Router();
 const Article=require("../models/article")
 
+router.get('/cat/:categorieID', async (req, res) => { 
+    try {
+           const products = await Article.aggregate([
+            { 
+               $lookup: { //< Lookup is like a Left Join in SQL
+                  from: "scategories", 
+                  localField: "scategorieID", 
+                  foreignField: "_id", 
+                  as: "store_details" //< You are adding this field to the output
+               } 
+            }, 
+            { 
+               $match: { 
+                  'store_details.categorieID': req.params.categorieID
+               } 
+            }
+         ]).exec();
+         res.status(200).json(products);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+});
+
+
 // chercher un article par s/cat
 router.get('/scat/:scategorieID',async(req, res)=>{
     try {
