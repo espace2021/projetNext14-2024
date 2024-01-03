@@ -1,7 +1,7 @@
 import NewProduct from "@/components/admin/newProductComponent";
 import {fetchSCategories} from "@/services/ScategorieService"
 const getscategories=async()=>{
-    const {data}=await fetchSCategories()
+    const data=await fetchSCategories()
     return data;
 }
 const NewProductPage = async() => {

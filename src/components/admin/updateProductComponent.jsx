@@ -18,14 +18,9 @@ import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
 
-import {editArticle,fetchArticleById} from "@/services/ArticleService"
+import {editArticle} from "@/services/ArticleService"
 
-const getProductDetails=async(id)=>{
-    const {data}=await fetchArticleById(id);
-    return data;
-}
-
-const UpdateProduct = ({params,scategories}) => {
+const UpdateProduct = ({article,scategories}) => {
 
   const [files, setFiles] = useState([]);
 
@@ -43,9 +38,7 @@ const UpdateProduct = ({params,scategories}) => {
 
   
   useEffect(() => {
-
-    getProductDetails(params.id)
-    .then((article) => {
+   
       setReference(article.reference)
       setDesignation(article.designation)
       setPrix(article.prix)
@@ -61,16 +54,15 @@ const UpdateProduct = ({params,scategories}) => {
         }
         ])
  
-    }).catch((err)=>console.log(err));
-   
-   }, [params]);
+     
+   }, [article]);
 
   const handleSubmit = async(event) => { 
     event.preventDefault();
     const form = event.currentTarget;
     if (form.checkValidity() === true) {
-      const article={
-        _id:params.id,
+      const articleEdited={
+        _id:article._id,
         reference,
         designation,
         marque,
@@ -80,7 +72,7 @@ const UpdateProduct = ({params,scategories}) => {
         scategorieID
      }
      
-      await editArticle(article)
+      await editArticle(articleEdited)
       .then(res=>{
       router.push("/admin/products")
       router.refresh()

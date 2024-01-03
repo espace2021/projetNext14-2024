@@ -1,18 +1,52 @@
-import Api from "../Axios/Api";
-const SCATEGORIE_API="/scategories"
+const SCATEGORIE_API="/scategories/"
+
 export const fetchSCategories=async()=> {
-return await Api.get(SCATEGORIE_API);
-}
+    const res = await fetch(process.env.API_URL+SCATEGORIE_API, { cache: 'no-store' })
+
+    if (!res.ok) {
+      throw new Error('Failed to fetch data')
+    }
+    const response = await res.json();
+    return response;
+    }
+
 export const fetchSCategorieById=async(scategorieId)=> {
-return await Api.get(SCATEGORIE_API + '/' + scategorieId);
+    const res = await fetch(process.env.API_URL+SCATEGORIE_API+`${scategorieId}`,{
+        method: 'GET'
+    });
+    const response = await res.json();
+    return response 
+
 }
 
 export const deleteSCategorie=async(scategorieId) =>{
-return await Api.delete(SCATEGORIE_API + '/' + scategorieId);
+    const res = await fetch(process.env.API_URL+SCATEGORIE_API+`${scategorieId}`,{
+        method: 'DELETE'
+    });
+    const response = await res.json();
+    return response;
 }
+
 export const addSCategorie=async(scategorie)=> {
-return await Api.post(SCATEGORIE_API,scategorie);
+    const res = await fetch(process.env.API_URL+SCATEGORIE_API, {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(scategorie),
+    });
+    const response = await res.json();
+    return response;
 }
-export const editSCategorie=(scategorie) =>{
-return Api.put(SCATEGORIE_API + '/' + scategorie._id, scategorie);
+
+export const editSCategorie=async(scategorie) =>{
+    const res = await fetch(process.env.API_URL+SCATEGORIE_API+`${scategorie._id}`, {
+        method: 'PUT',
+        headers: {
+        'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(scategorie),
+    });
+    const response = await res.json();
+    return response;
 }
