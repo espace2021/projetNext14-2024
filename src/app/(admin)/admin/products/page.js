@@ -1,6 +1,7 @@
 import Listproducts from '@/components/admin/listproducts';
 
-import {fetchArticles} from "@/services/ArticleService"
+import {fetchArticles} from "@/services/ArticleService";
+
 const getProducts=async()=>{
 const data=await fetchArticles()
 return data;

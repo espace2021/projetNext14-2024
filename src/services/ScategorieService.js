@@ -2,11 +2,7 @@ const SCATEGORIE_API="/scategories/"
 
 export const fetchSCategories=async()=> {
     const res = await fetch(process.env.API_URL+SCATEGORIE_API, { cache: 'no-store' })
-
-    if (!res.ok) {
-      throw new Error('Failed to fetch data')
-    }
-    const response = await res.json();
+    const response = await res.json()
     return response;
     }
 
