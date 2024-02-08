@@ -1,14 +1,16 @@
 import React from 'react'
+import ValuesCards from "@/components/admin/dashboard/valuesCards"
+import Analytics from '@/components/admin/dashboard/analytics'
+import Chart from '@/components/admin/dashboard/chart'
+import UsersTable from '@/components/admin/dashboard/usersTable'
 
 const page = () => {
   return (
   <div className="container">
-     <img className="img-fluid"
-      src="https://res.cloudinary.com/iset-sfax/image/upload/v1704030008/images/dashboardTracking_pmhhtv.png"
-      width="1200" height="900"
-      alt="dashboard"
-       />
-       
+    <ValuesCards />
+    <Analytics />
+    <Chart />
+    <UsersTable />
 </div>
   )
 }
