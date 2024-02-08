@@ -3,7 +3,7 @@ import { Card, Metric, Text } from "@tremor/react";
 
 const ValuesCards = () => {
   return (
-  <div class="grid grid-cols-3 gap-1">
+  <div className="grid grid-cols-3 gap-1">
  <Card className="max-w-xs mx-auto" decoration="top" decorationColor="indigo">
     <Text>Total sales</Text>
     <Metric>34,743 TND</Metric>

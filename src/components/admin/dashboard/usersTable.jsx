@@ -1,3 +1,4 @@
+
 import {
   Table,
   TableBody,
@@ -5,6 +6,7 @@ import {
   TableHead,
   TableHeaderCell,
   TableRow,
+  Card
 } from "@tremor/react";
 
 async function getUsers() {
@@ -20,6 +22,7 @@ async function getUsers() {
 export default async function UsersTable() {
     const users= await getUsers();
   return (
+    <Card className="mt-8">
     <Table>
       <TableHead>
         <TableRow>
@@ -40,5 +43,6 @@ export default async function UsersTable() {
         ))}
       </TableBody>
     </Table>
+    </Card>
   );
 }
