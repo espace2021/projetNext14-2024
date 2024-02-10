@@ -1,6 +1,6 @@
 'use client'
-import AreaChartPlot from "./AreaChartPlot";
-import AreaUsersList from "./AreaUsersList";
+import AreaChartPlot from "./areaChartPlot";
+import AreaUsersList from "./areaUsersList";
 const CardsAnalytics = () => {
   return (
     <>

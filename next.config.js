@@ -4,7 +4,8 @@ const nextConfig = {
         domains:["res.cloudinary.com"]
         },
     env:{
-        API_URL : "http://localhost:3001/api"
+        API_URL : "http://localhost:3001/api",
+        SECRET : "secret"
     }    
 }
 
