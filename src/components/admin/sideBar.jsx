@@ -14,7 +14,13 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import LightModeIcon from '@mui/icons-material/LightMode';
 
+import Image from 'next/image'
+import { useSession } from 'next-auth/react'
+
 const SideBar = () => {
+
+  const { data: session } = useSession()
+ 
   return (
     <Sidebar>
 
@@ -36,6 +42,28 @@ const SideBar = () => {
         </div>
       </div>
       </MenuItem>
+
+      <MenuItem>  
+     <div className="card" style={{"backgroundColor": "#44ebe2"}}>
+      <div className="card-body">
+          {session?.user?.image ? (
+              <div>
+                <Image
+                  src={session.user.image}
+                  alt={session.user.email}
+                  className='inline-block rounded-full'
+                  width={30}
+                  height={30}
+                />
+                {session.user.email}
+              </div>
+            ) : (
+             null
+            )}
+        </div>
+        </div> 
+      </MenuItem>
+
       <MenuItem component={<Link href="/admin/dashboard" />}><DashboardIcon/> Dashboard</MenuItem>
       <MenuItem component={<Link href="/admin/products" />}> <ArticleIcon/> Produits</MenuItem>
       <MenuItem component={<Link href="/admin/categories" />}> <CategoryIcon/> Catégories</MenuItem>

@@ -36,8 +36,8 @@ export const authOptions = {
                   throw new Error("Invalid credentials");
                 }
       
-                if (response.user) {
-                    return { ...response.user, password: null, role: response.user.role };
+                if (response.user) { console.log(response.user)
+                    return { ...response.user, password: null, role: response.user.role , image: response.user.avatar};
                     
                  } else {
                     return null;
@@ -45,6 +45,7 @@ export const authOptions = {
               } catch (error) {
                 console.log(error);
               }
+              return null;
             },
           }),
         GitHubProvider({
@@ -58,12 +59,18 @@ export const authOptions = {
     ],
     secret: process.env.SECRET,
     callbacks: {
-      async jwt({ token, user }) { console.log(token)
-        if (user) token.role = user.role;
+      async jwt({ token, user }) { 
+        if (user){
+          token.role = user.role;
+          token.image = user.image;
+        } 
         return token;
       },
-      async session({ session, token }) {
-        if (session?.user) session.user.role = token.role;
+      async session({ session, token }) { 
+        if (session?.user) {
+          session.user.role = token.role;
+          session.user.image = token.image;
+        }
         return session;
       },
     },
