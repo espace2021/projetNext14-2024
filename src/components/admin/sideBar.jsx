@@ -54,6 +54,7 @@ const SideBar = () => {
                   className='inline-block rounded-full'
                   width={30}
                   height={30}
+                  style={{ width: 'auto', height: 'auto' }}
                 />
                 {session.user.email}
               </div>

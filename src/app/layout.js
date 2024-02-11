@@ -5,7 +5,9 @@ import Menu from '@/components/client/menu';
 
 import CategoriesMenu from '@/components/client/categoriesMenu';
 
-import Provider from '../components/provider';
+import AuthProvider from '@/providers/authProvider';
+
+import CartsProvider from '@/providers/cartsProvider';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,13 +17,19 @@ export const metadata = {
 }
 
 export default function RootLayout({ children }) {
+  
   return (
     <html lang="en">
       <body className={inter.className}>
-      <Provider>
+      <CartsProvider>
+      <AuthProvider>
+     
       <Menu><CategoriesMenu/></Menu>
+   
         {children}
-      </Provider>
+      
+      </AuthProvider>
+     </CartsProvider> 
       </body>
     </html>
   )

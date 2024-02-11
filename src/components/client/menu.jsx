@@ -16,7 +16,18 @@ import DynamicFeedIcon from '@mui/icons-material/DynamicFeed';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useSession, signIn, signOut } from 'next-auth/react'
 
+import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
+import { useRouter } from 'next/navigation'
+
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import CartModal from "./shoppingCart/cartModal";
+import { useShoppingCart } from "use-shopping-cart" ;
+
 function Menu({children }) {
+
+  const { handleCartClick, cartCount } = useShoppingCart();
+
+  const router = useRouter()
   
   const { data: session } = useSession()
 
@@ -40,7 +51,18 @@ function Menu({children }) {
             }
 
             <Nav.Link as={Link} href="/client/pageAide"><HelpIcon />Aide</Nav.Link>
+         
+            <Nav.Link onClick={() => router.push('/client/cartProducts')}><ShoppingBasketIcon style={{ color: 'pink' }}/> Shopping Cart </Nav.Link>
           </Nav>
+
+          <button className="relative" onClick={() => handleCartClick()}>
+                <ShoppingCartIcon color="primary"  />
+                <div className="rounded-full flex justify-center items-center bg-emerald-500 text-xs text-white absolute w-6 h-5 bottom-6 -right-1">
+                {cartCount}
+                </div>
+              </button>
+              <CartModal />
+
         </Container>
       </Navbar>
      </>
