@@ -1,11 +1,12 @@
 "use client";
 import { useState } from "react";
 import { useShoppingCart } from "use-shopping-cart";
-import Image from "next/image";
+import DeleteIcon from '@mui/icons-material/Delete';
+import ClearIcon from '@mui/icons-material/Clear';
 
 export default function cartModal() {
     
-    const { shouldDisplayCart,cartDetails,cartCount } = useShoppingCart();
+    const { shouldDisplayCart,cartDetails,cartCount , removeItem , clearCart, totalPrice,} = useShoppingCart();
 
     const [status, setStatus] = useState("idle");
 
@@ -18,6 +19,12 @@ export default function cartModal() {
     >
     {cartCount && cartCount > 0 ? (
         <>
+        <div 
+            onClick={() => clearCart()}
+            >
+             <ClearIcon/>
+        </div>
+       
           {Object.values(cartDetails).map((item) => (
     
             <div className="flex items-center gap-4 mb-3" key={item.id}>
@@ -32,13 +39,16 @@ export default function cartModal() {
              {item.title} <span className="text-xs">({item.quantity})</span>
             </div>
             <div className="ml-auto">{item.price} TND</div>
-            <button className="hover:bg-emerald-50 transition-colors rounded-full duration-500 p-1">
-              <Image alt="delete icon" src="/images/trash.png" width={25} height={25} />
+            <button className="hover:bg-emerald-50 transition-colors rounded-full duration-500 p-1"
+            onClick={() => removeItem(item.id)}
+            >
+            <DeleteIcon color="secondary"/>
             </button>
           </div>
       
           ))}
                 <article className="mt-3 flex flex-col">
+                    Total : {totalPrice} TND
                    <button className="bg-emerald-50 hover:bg-emerald-500 hover:text-white transition-colors duration-500 text-emerald-500 py-3 px-5 rounded-md w-100">
                      {status !== "loading" ? "Proceed to checkout" : "Loading..."}
                   </button>
