@@ -20,6 +20,7 @@
     "@mui/material": "^5.15.2",
     "@radix-ui/react-dialog": "^1.0.5",
     "@smastrom/react-rating": "^1.5.0",
+    "@stripe/stripe-js": "^3.0.3",
     "@tremor/react": "^3.13.4",
     "axios": "^1.6.3",
     "bootstrap": "^5.3.2",
@@ -42,6 +43,7 @@
     "react-hot-toast": "^2.4.1",
     "react-pro-sidebar": "^1.1.0-alpha.1",
     "recharts": "^2.11.0",
+    "stripe": "^14.17.0",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
     "use-shopping-cart": "^3.2.0"

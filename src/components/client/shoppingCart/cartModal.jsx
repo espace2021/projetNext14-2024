@@ -7,6 +7,8 @@ import ClearIcon from '@mui/icons-material/Clear';
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 
+import {loadStripe} from "@stripe/stripe-js";
+
 export default function cartModal() {
 
   const router = useRouter();
@@ -68,6 +70,39 @@ const orderId=1234657
        .catch((error) => {console.log(error)})
      }
 
+     async function handleClickStripe(event) {
+      
+        event.preventDefault();
+        if (cartCount > 0) {
+          setStatus("loading");
+          try {
+            const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY );
+
+            if (!stripe) throw new Error('Stripe failed to initialize.');
+       
+            const checkoutResponse = await fetch('/api/stripe/checkoutSessions', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({cartDetails}),
+          })
+            const {sessionId} = await checkoutResponse.json();
+            const stripeError = await stripe.redirectToCheckout({sessionId});
+       
+            if (stripeError) {
+                console.error(stripeError);
+            }
+            
+          } catch (error) {
+            console.error(error);
+            setStatus("redirect-error");
+          }
+        } else {
+          setStatus("no-items");
+        }
+      }
+
     return (
     <div
       className={`bg-white flex flex-col absolute right-3 md:right-9 top-14 w-80 py-4 px-4 shadow-[0_5px_15px_0_rgba(0,0,0,.15)] rounded-md transition-opacity duration-500 ${
@@ -110,7 +145,13 @@ const orderId=1234657
                    className="bg-emerald-50 hover:bg-emerald-500 hover:text-white transition-colors duration-500 text-emerald-500 py-3 px-5 rounded-md w-100"
                    onClick={()=>handleClick()}
                    >
-                     {status !== "loading" ? "Proceed to checkout" : "Loading..."}
+                     {status !== "loading" ? "Proceed to checkout with Konnect" : "Loading..."}
+                  </button>
+                  <button 
+                   className="bg-amber-50 hover:bg-amber-500 hover:text-white transition-colors duration-500 text-amber-500 py-3 px-5 rounded-md w-100"
+                   onClick={(event)=>handleClickStripe(event)}
+                   >
+                     {status !== "loading" ? "Proceed to checkout with Stripe" : "Loading..."}
                   </button>
                </article>
         </>
@@ -121,3 +162,4 @@ const orderId=1234657
  
   );
 }
+
