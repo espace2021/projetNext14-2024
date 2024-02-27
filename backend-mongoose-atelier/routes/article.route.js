@@ -38,8 +38,7 @@ router.get('/pagination', async(req, res) => {
      
         // Calculez le nombre d'éléments à sauter (offset)
         const offset = (page - 1) * limit;
- 
-    
+     
      try {
  
      // Effectuez la requête à votre source de données en utilisant les paramètres de pagination
@@ -55,7 +54,38 @@ router.get('/pagination', async(req, res) => {
        res.status(404).json({ message: error.message });
    }
    });
-   
+ 
+   // afficher la liste des articles par page avec filtre
+   router.get('/paginationFilter', async (req, res) => { 
+    const page = req.query.page || 1; // Current page
+    const limit = req.query.limit || 5; // Number of items per page
+    const searchTerm = req.query.searchTerm || ""; // searchedTerm
+
+    const offset = (page - 1) * limit;
+     
+    try {
+       
+        let query = {};
+
+        // Si searchTerm est défini, ajoutez un filtre pour la recherche
+        if (searchTerm) {
+            query = { designation: { $regex: new RegExp(searchTerm, 'i') } };
+        }
+
+        const articlesTot = await Article.find(query).countDocuments();
+
+        const articles = await Article.find(query)
+            .sort({ '_id': -1 })
+            .skip(offset)
+            .limit(limit);
+    
+        res.status(200).json({ articles, tot: articlesTot });
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+});
+
+
 // chercher un article
 router.get('/:articleId',async(req, res)=>{
     try {

@@ -1,15 +1,5 @@
-async function getUsers() {
-    const res = await fetch('https://apigenerator.dronahq.com/api/92T9eIIy/users')
-     
-    if (!res.ok) {
-        throw new Error('Failed to fetch data')
-    }
-   
-    return res.json()
-  }
-
-export default async function AreaUsersList() {
-    const users= await getUsers();
+export default function AreaUsersList({users}) {
+    console.log(users)
   return (
     <div className="card">
     <table className="table table-striped">
@@ -22,7 +12,7 @@ export default async function AreaUsersList() {
         </tr>
       </thead>
       <tbody>
-        {users.map((user) => (
+        {users && users.map((user) => (
           <tr key={user.id}>
             <td>
               <img src={user.avatar} width="40" height="40" style={{ borderRadius: "50%" }} alt={user.name + "'s Avatar"} />

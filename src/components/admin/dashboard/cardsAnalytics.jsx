@@ -1,7 +1,7 @@
 'use client'
 import AreaChartPlot from "./areaChartPlot";
 import AreaUsersList from "./areaUsersList";
-const CardsAnalytics = () => {
+const CardsAnalytics = ({users}) => {
   return (
     <>
       <section>
@@ -45,7 +45,7 @@ const CardsAnalytics = () => {
 
       <section className="flex m-4 gap-2">
         <div className="w-full h-[250px] bg-gray-700 rounded">
-        <AreaUsersList />
+       <AreaUsersList users={users} />
         </div>
       </section>
     </>

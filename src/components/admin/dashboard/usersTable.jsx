@@ -10,8 +10,8 @@ import {
 } from "@tremor/react";
 
 async function getUsers() {
-    const res = await fetch('https://apigenerator.dronahq.com/api/92T9eIIy/users')
-     
+  //  const res = await fetch('https://apigenerator.dronahq.com/api/92T9eIIy/users')
+  const res = await fetch('http://localhost:3001/api/users')
     if (!res.ok) {
         throw new Error('Failed to fetch data')
     }

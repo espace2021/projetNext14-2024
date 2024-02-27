@@ -105,4 +105,16 @@ function generateRefreshToken(user) {
    
   });
 
+  // afficher la liste des utilisateurs.
+router.get('/', async (req, res, )=> {
+  try {
+      const users = await User.find().select("-password");              
+      return res.status(200).json(users)
+ 
+  } catch (error) {
+      res.status(404).json({ message: error.message });
+  }
+
+});
+
 module.exports = router;

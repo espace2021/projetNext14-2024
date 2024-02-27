@@ -1,0 +1,12 @@
+[{
+"question" : "Comment retourner un produit acheté" ,
+"reponse" : "Si le produit que vous avez reçu ne vous convient pas, vous disposez de 15 jours après réception ou date d'achat en magasin pour nous le retourner. Vous pouvez le rapporter en magasin gratuitement ou bien nous le retourner par voie postale (retour à vos frais en cas de changement d'avis)."
+},
+{
+    "question" : "Quels sont les délais et modalités de remboursement ?" ,
+    "reponse" : "Dans le cas où vous avez demandé le remboursement d’un article ou de l’intégralité de votre commande et que celui-ci n’apparait toujours pas sur votre compte."
+},
+{
+    "question" : "Quels sont les modes et délais de livraison ?" ,
+    "reponse" : "Les modes de livraison dépendent des produits et de votre adresse, vous pouvez vérifier l'éligibilité et les tarifs sur la fiche article du produit"
+}]
