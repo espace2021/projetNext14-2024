@@ -55,22 +55,32 @@ router.get('/pagination', async(req, res) => {
    }
    });
  
-   // afficher la liste des articles par page avec filtre
+   // afficher la liste des articles par page avec filtres
    router.get('/paginationFilter', async (req, res) => { 
     const page = req.query.page || 1; // Current page
     const limit = req.query.limit || 5; // Number of items per page
     const searchTerm = req.query.searchTerm || ""; // searchedTerm
 
     const offset = (page - 1) * limit;
-     
+
+    // retrouver le prix le plus grand : Utilisation de findOne avec un tri descendant sur le champ prix et ne retourne que le champ prix
+    // Le champ _id est toujours présent sauf si on l'exclue explicitement. on ajoute la syntaxe - à select
+    const maxValueDoc = await Article.findOne().sort('-prix').select('prix -_id');
+    const prixMax = req.query.prixMax || maxValueDoc.prix; // le prix max si vide prend la valeur max de la BD
+   
     try {
        
         let query = {};
 
-        // Si searchTerm est défini, ajoutez un filtre pour la recherche
-        if (searchTerm) {
-            query = { designation: { $regex: new RegExp(searchTerm, 'i') } };
+         // Si le terme de recherche est défini, ajouter un filtre pour la désignation
+         if (searchTerm) {
+            query.designation = { $regex: new RegExp(searchTerm, 'i') };
         }
+
+        // Ajouter un filtre pour le prix
+       
+            query.prix = { $lte: prixMax };
+       
 
         const articlesTot = await Article.find(query).countDocuments();
 
@@ -79,7 +89,7 @@ router.get('/pagination', async(req, res) => {
             .skip(offset)
             .limit(limit);
     
-        res.status(200).json({ articles, tot: articlesTot });
+        res.status(200).json({ articles, tot: articlesTot , maxValuePrix:maxValueDoc.prix});
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
