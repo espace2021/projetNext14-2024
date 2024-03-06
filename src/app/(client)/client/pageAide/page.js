@@ -1,7 +1,7 @@
 import React from 'react'
 
 async function getData() {
-    const res = await fetch('https://apigenerator.dronahq.com/api/R38G3DIh/questionsReponses')
+    const res = await fetch('https://apigenerator.dronahq.com/api/reUmzrE7/questionsReponses')
     return res.json()
   }
 

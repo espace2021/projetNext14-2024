@@ -8,11 +8,7 @@ import CardsAnalytics from '@/components/admin/dashboard/cardsAnalytics'
 async function getUsers() {
   //https://apigenerator.dronahq.com/api/g6I0f1KJ/users
     const res = await fetch('http://localhost:3001/api/users')
-     
-    if (!res.ok) {
-        throw new Error('Failed to fetch data')
-    }
-   
+    
     return await res.json()
   }
 

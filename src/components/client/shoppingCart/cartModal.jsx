@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useShoppingCart } from "use-shopping-cart";
 import DeleteIcon from '@mui/icons-material/Delete';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -9,16 +9,47 @@ import { useRouter } from 'next/navigation'
 
 import {loadStripe} from "@stripe/stripe-js";
 
+import {addOrder} from "@/services/OrderService";
+
+import { signIn, useSession } from "next-auth/react";
+
 export default function cartModal() {
 
-  const router = useRouter();
+   const router = useRouter();
     
     const { shouldDisplayCart,cartDetails,cartCount , removeItem , clearCart, totalPrice,} = useShoppingCart();
 
     const [status, setStatus] = useState("idle");
 
-    async function handleClick() {
+    const { data: session } = useSession();
 
+const checkAuth=()=>{
+  if (!session) {
+    signIn(); // Force sign in to hopefully resolve error
+  }
+}
+
+const addToOrder=async ()=>{ 
+  
+  const lineOrder= Object.values(cartDetails).map((lc) => ({
+    articleID: lc.id,
+    quantity: lc.quantity,
+    totalPrice: lc.price*lc.quantity
+  }));
+  const objectOrder ={
+    "client": session?.user.email||"client x",
+    "status":"Not processed",
+    "lineOrder": lineOrder
+  }
+   
+  addOrder(objectOrder)
+
+}
+
+async function handleClick() {    
+
+  checkAuth();
+  
       setStatus("loading")
 
 const firstName= "H"
@@ -65,15 +96,19 @@ const orderId=1234657
           const payUrl = response.data.payUrl
           const paymentRef = response.data.paymentRef
            router.push(payUrl)
-           clearCart()
+           clearCart();
+           addToOrder();
         })
        .catch((error) => {console.log(error)})
      }
 
      async function handleClickStripe(event) {
+
+      checkAuth();
       
         event.preventDefault();
-        if (cartCount > 0) {
+        if (cartCount > 0) {    
+         
           setStatus("loading");
           try {
             const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY );
@@ -87,13 +122,14 @@ const orderId=1234657
               },
               body: JSON.stringify({cartDetails}),
           })
+            addToOrder();
             const {sessionId} = await checkoutResponse.json();
             const stripeError = await stripe.redirectToCheckout({sessionId});
-       
+         
             if (stripeError) {
                 console.error(stripeError);
             }
-            
+           
           } catch (error) {
             console.error(error);
             setStatus("redirect-error");

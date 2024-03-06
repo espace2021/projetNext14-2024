@@ -33,6 +33,8 @@ const articleRouter =require("./routes/article.route")
 app.use('/api/articles', articleRouter);
 const userRouter =require("./routes/user.route")
 app.use('/api/users', userRouter);
+const orderRouter =require("./routes/order.route")
+app.use('/api/orders', orderRouter);
 
 
 //Démarrer le serveur
