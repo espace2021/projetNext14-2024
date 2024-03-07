@@ -43,8 +43,8 @@ router.get('/', async (req, res, )=> {
 
   // modifier état commande
 
-  router.put('/:id', async (req, res) => { 
-    const newStatus = req.body.status;
+  router.put('/:id', async (req, res) => { console.log(req.body)
+   const newStatus = req.body.status;
     const orderId=req.params.id;
     if (!['Not processed', 'Processing', 'Shipped', 'Delivered', 'Cancelled'].includes(newStatus)) {
       res.status(403).json({ message: 'Invalid status value' }); return;
