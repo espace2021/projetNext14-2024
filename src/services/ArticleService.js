@@ -58,3 +58,22 @@ export const fetchArticlesPaginationFilter=async(page,limit,searchTerm,prixMax)=
         const response=await res.json()
         return response;
         }    
+
+export const updateQuantity=async(lineOrder) =>{
+    const path="qty/"
+    let result = []
+     result = lineOrder.map(async (line) =>{
+      const res=  await fetch(process.env.API_URL+ARTICLE_API+path+`${line.articleID}`, {
+            method: 'PUT',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({"quantity":line.quantity}),
+        });
+       const response = await res.json();
+       result.push(response) ;
+    })
+          
+     return result;       
+            
+        }

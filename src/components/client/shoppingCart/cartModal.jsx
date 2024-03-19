@@ -1,5 +1,5 @@
 "use client";
-import { useState,useEffect } from "react";
+import { useState } from "react";
 import { useShoppingCart } from "use-shopping-cart";
 import DeleteIcon from '@mui/icons-material/Delete';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -12,6 +12,8 @@ import {loadStripe} from "@stripe/stripe-js";
 import {addOrder} from "@/services/OrderService";
 
 import { signIn, useSession } from "next-auth/react";
+
+import {updateQuantity} from "@/services/ArticleService";
 
 export default function cartModal() {
 
@@ -43,7 +45,7 @@ const addToOrder=async ()=>{
   }
    
   addOrder(objectOrder)
-
+  updateQuantity(lineOrder)
 }
 
 async function handleClick() {    

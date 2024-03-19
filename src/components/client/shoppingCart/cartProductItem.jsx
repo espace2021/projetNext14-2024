@@ -32,11 +32,13 @@ const CartProductItem= ({product})=> {
         image: product.imageart,
         price : product.prix
         };
+        if(quantity<product.qtestock){
        addItem(target, { count: quantity }).then((()=>{
         console.log('Item added to cart:', target);
         setQuantity(1)
        })).catch((err)=>{console.log(err)})
-              
+      }     
+      else window.alert("Not Enough Stock") 
       };
 
     return ( 

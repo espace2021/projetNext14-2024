@@ -160,4 +160,29 @@ router.get('/cat/:categorieID', async (req, res) => {
     }
 });
 
+  // modifier quantité
+
+  router.put('/qty/:id', async (req, res) => { console.log(req.body)
+    const qty = req.body.quantity||0;
+    const articleId=req.params.id||null;
+
+    const oldArticle=await Article.findById(articleId)
+   
+     try {
+       const articleUpdated = await Article.findByIdAndUpdate(
+         articleId,
+         { qtestock: oldArticle.qtestock - qty},
+         { new: true } // Return the updated document
+       );
+   
+       if (!articleUpdated) {
+         return res.status(404).json({ message: 'Product not found' });
+       }
+   
+       res.status(200).json(articleUpdated);
+     } catch (error) {
+       res.status(404).json({ message: error.message });
+     }
+   });
+
 module.exports = router;
